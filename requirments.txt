@@ -1,0 +1,8 @@
+transformers
+torch
+llama_index
+llama_index-embeddings-huggingface
+llama_index-embeddings-huggingface-optimum
+llama-index-retrievers-bm25
+llama-index-llms-modelscope
+openai
