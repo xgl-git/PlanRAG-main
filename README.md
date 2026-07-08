@@ -2,7 +2,7 @@
 
 ### Dependencies 
 
-We use anaconda to create python environment:
+We use anaconda to create environment:
 ```
 conda create --name planrag python=3.9
 ```
