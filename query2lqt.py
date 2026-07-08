@@ -39,7 +39,6 @@ def semantic_simlarity(plan, query, prompt):
     embeddings_1 = bgem3.encode(query)['dense_vecs']
     embeddings_2 = bgem3.encode(output)['dense_vecs']
     similarity = embeddings_1 @ embeddings_2.T
-    print(similarity)
     return float(similarity)
 def compute_cost(left_nodes, right_nodes, left_edges, right_edges, score):
     nodes = set(left_nodes + right_nodes)
@@ -85,7 +84,7 @@ def has_cycle(edges):
     return visited != len(nodes)
 def call_gpt4o(prompt: str) -> str:
     request_params = {
-        "model": "gpt-4o-mini",
+        "model": "",
         "temperature": 0.7,
         "messages": [
             {"role": "system",

@@ -5,7 +5,7 @@ from llama_index.core import Settings
 from llama_index.core.response_synthesizers import get_response_synthesizer
 from llama_index.core.prompts import PromptTemplate
 llm = OpenAI(
-    model="gpt-4o-mini",
+    model="",
     api_key="",
     api_base=''
 )

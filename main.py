@@ -1,8 +1,6 @@
 
 from init_parameter import init_model
 from llama_index.core import Document
-from llama_index.core.node_parser import SentenceSplitter
-from llama_index.retrievers.bm25 import BM25Retriever
 from evaluate import *
 import os
 from query2lqt import *
@@ -16,7 +14,6 @@ with open('./prompt/prompt1.txt', 'r', encoding='utf-8') as f:
 with open('./prompt/prompt4.txt', 'r', encoding='utf-8') as f:
     prompt4 = f.read()
 llm = OpenAI(
-    model="gpt-4o-mini",
     api_key="",
     api_base='',
     temperature = 0.5
@@ -28,35 +25,7 @@ documents = [Document(text = json.loads(line)["text"].strip()) for line in open(
 queries = [json.loads(line)['question'].strip() for line in open(os.path.join(data_path, 'queries.jsonl'), 'r', encoding = 'utf-8').readlines()]
 gts1 = [[json.loads(line)['answer'].strip()] for line in open(os.path.join(data_path, 'queries.jsonl'), 'r', encoding = 'utf-8').readlines()]
 gts2 = [json.loads(line)['answer'].strip() for line in open(os.path.join(data_path, 'queries.jsonl'), 'r', encoding = 'utf-8').readlines()]
-'''
-def retrival(query, retriever):
-    custom_prompt = PromptTemplate(
-        "You are a strict JSON-only answering assistant.\n"
-        "You must output only valid JSON.\n"
-        "If the context does not contain enough information to answer, output an empty string as the answer.\n"
-        "Do NOT explain, do NOT say you cannot answer, do NOT output extra words.\n\n"
-        "Question:\n{query_str}\n\n"
-        "Context:\n{context_str}\n\n"
-        "Output a single JSON object exactly in this format:\n"
-        "{\n"
-        '  "answer": "<string>"\n'
-        "}"
-    )
 
-    response_synthesizer = get_response_synthesizer(
-        response_mode="compact",  # 或 "tree_summarize"
-        text_qa_template=custom_prompt,
-    )
-    retrival_docs = [node.text for node in retriever.retrieve(preprocess_text(query))]
-    query_engine = RetrieverQueryEngine(retriever=retriever, response_synthesizer=response_synthesizer)
-
-    response = query_engine.query(query).response
-    match = re.search(r"\{.*?\}", response, re.DOTALL)
-    if match:
-        answer = json.loads(match.group())
-    return answer, retrival_docs
-
-'''
 
 def preprocess_text(text: str):
     tokens = [tok for tok in jieba.cut(text, cut_all=False) if tok.strip()]

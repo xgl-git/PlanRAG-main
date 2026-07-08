@@ -37,8 +37,6 @@ Does the Prediction imply the Ground-truth Answer? Output Yes or No:
             ],
         }
         response = client.chat.completions.create(**request_params)
-        response = response.model_dump()
-        response = response['choices'][0]['message']['content'].strip().lower()
         if "yes" in response:
             correct_count += 1
     return 100.0 * correct_count / len(predictions)
